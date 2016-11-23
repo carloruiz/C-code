@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "binaryTree.h"
-#include <stdio.h>
 
 static TreeNode *createTreeNode(void *data, int size)
 {
@@ -14,7 +13,7 @@ static TreeNode *createTreeNode(void *data, int size)
 	return new;
 }
 
-TreeNode *findTreeNode(TreeNode *node, void *data, int (*cmp)(TreeNode *, void *))
+TreeNode *findTreeNode(TreeNode *node, void *data, int (*cmp)(const TreeNode *, const void *))
 {
 	if (!node)
 		return NULL;
@@ -26,7 +25,7 @@ TreeNode *findTreeNode(TreeNode *node, void *data, int (*cmp)(TreeNode *, void *
 		return node;
 }
 
-TreeNode *insertTreeNode(TreeNode *node, void *data, int size, int (*cmp)(TreeNode *, void *))
+TreeNode *insertTreeNode(TreeNode *node, void *data, int size, int (*cmp)(const TreeNode *, const void *))
 {
 	int val;
 	if (!node) 
@@ -39,8 +38,7 @@ TreeNode *insertTreeNode(TreeNode *node, void *data, int size, int (*cmp)(TreeNo
 		node->count++;
 	return node;
 }
-
-//make recursive 
+ 
 TreeNode *findMinTreeNode(TreeNode *node) 
 {
 	while (node->left)
@@ -48,7 +46,7 @@ TreeNode *findMinTreeNode(TreeNode *node)
 	return node; 
 }
 
-TreeNode *removeTreeNode(TreeNode *node, void *data, int (*cmp)(TreeNode *, void *data))
+TreeNode *removeTreeNode(TreeNode *node, void *data, int (*cmp)(const TreeNode *, const void *data))
 {
 	if (!node) return 0;
 	
@@ -81,14 +79,14 @@ TreeNode *removeTreeNode(TreeNode *node, void *data, int (*cmp)(TreeNode *, void
 			} else {
 				min->data = tmpData;
 				freeTreeNode(min);
-				node->right = NULL; // add this to !	
+				node->right = NULL;	
 			}
 		}
 	}
 	return node;
 }
 
-int freeTreeNode(TreeNode *node)
+static int freeTreeNode(TreeNode *node)
 {
 	free(node->data);
 	free(node);
@@ -115,29 +113,3 @@ TreeNode *releaseBinaryTree(TreeNode *node)
 	return NULL;	
 }
 
-
-
-/*
-TreeNode *insertNode2(TreeNode *node, void *data, int (*cmp)(TreeNode *, void *))
-{
-	if (!node)
-		return TreeNode *new = createNode(data);
-	
-	TreeNode *prev;
-	while (node) {
-		int i = (*cmp)(node, data);
-		prev = node;
-		if (i > 0)
-			node = node->right;
-   		else if (i < 0) 
-			node = node->left;
-		else {
-			node->count++;		
-			return node;
-		}
-	}
-	TreeNode *new = createNode(data);
-	(i > 0) ? (prev->right = new) : (prev->left = new);
-	return new;
-}
-*/

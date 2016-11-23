@@ -6,21 +6,26 @@ typedef struct tNode {
 	struct tNode *right;
 } TreeNode;
 
-static TreeNode *createTreeNode(void *data, int size);
-
-static TreeNode *findMinTreeNode(TreeNode *node);
-
-TreeNode *findTreeNode(TreeNode *node, void *data, int (*cmp)(const TreeNode *, const void *));
+/* node is the root of the Binary Tree,
+ * data is a pointer to the data being added/removed to the tree
+ * size is the size in bytes  of object pointed to by data
+ * cmp is a pointer to a comparator function
+ */
 
 TreeNode *insertTreeNode(TreeNode *node, void *data, int size, int (*cmp)(const TreeNode *, const void*));
 
 TreeNode *removeTreeNode(TreeNode *node, void *data, int (*cmp)(const TreeNode *, const void *));
 
-static int freeTreeNode(TreeNode *node);
-
-// in order traversal
 void traverseBinaryTree(TreeNode *node, int (*f)(TreeNode*));
 
+TreeNode *findTreeNode(TreeNode *node, void *data, int (*cmp)(const TreeNode *, const void *));
+
 TreeNode *releaseBinaryTree(TreeNode *node);
+
+static TreeNode *createTreeNode(void *data, int size);
+
+static TreeNode *findMinTreeNode(TreeNode *node);
+
+static int freeTreeNode(TreeNode *node);
 
 
